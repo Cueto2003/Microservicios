@@ -2,7 +2,7 @@ package model
 
 
 type MetadataUser struct {
-	ID                 string    `json:"id"`
+	Email              string    `json:"email"`
 	FullName           string    `json:"full_name"`
 	AvatarURL          string    `json:"avatar_url"`
 	PhoneNumber        string    `json:"phone_number"`

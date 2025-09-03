@@ -16,7 +16,14 @@ type Repository struct {
 func New() *Repository {
 	return &Repository{
 		data: map[string]*model.MetadataUser{
-			"123": {ID: "123", FullName: "Lucía Gómez"},
+			"123": {
+				Email:       "123",
+				FullName:    "Lucía Gómez",
+				AvatarURL:   "",
+				PhoneNumber: "",
+				BirthDate:   "",
+				LastUpdated: "",
+			},
 		},
 	}
 }
@@ -34,9 +41,9 @@ func (r *Repository) Get(_ context.Context, id string) (*model.MetadataUser, err
 	return m, nil
 }
 
-func (r *Repository) Put(_ context.Context, id string, metadata *model.MetadataUser) error {
+func (r *Repository) Put(_ context.Context, metadata *model.MetadataUser) error {
 	r.Lock()
 	defer r.Unlock()
-	r.data[id] = metadata
+	r.data[metadata.Email] = metadata
 	return nil
 }

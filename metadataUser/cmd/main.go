@@ -26,7 +26,7 @@ func main() {
 	h := httphandler.New(c)
 
 	// endpoint
-	http.Handle("/metadata", http.HandlerFunc(h.GetMetadatUser))
+	http.Handle("/MetadataUser", http.HandlerFunc(h.CreateMetadatUser))
 
 	// server
 	if err := http.ListenAndServe(fmt.Sprintf(":%d", port), nil); err != nil {

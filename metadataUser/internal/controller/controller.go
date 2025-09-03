@@ -13,6 +13,7 @@ var ErrNotFound = errors.New("Not found")
 //Tipos de request (Solo Get)
 type metadataUserRepository interface {
 	Get(ctx context.Context, id string) (*model.MetadataUser, error)
+	Put(_ context.Context, metadata *model.MetadataUser) (error)
 }
 
 type Controller struct {
@@ -33,4 +34,13 @@ func (c *Controller) Get(ctx context.Context, id string) (*model.MetadataUser, e
 	}
 
 	return res, err
+}
+
+
+func (c *Controller) Put(ctx context.Context, metadata *model.MetadataUser) (*model.MetadataUser, error) {
+	err := c.repo.Put(ctx, metadata)
+	if err != nil {
+		return nil, err
+	}
+	return metadata, nil
 }

@@ -5,9 +5,11 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"time"
 
 	"proyecto/metadataUser/internal/controller"
 	"proyecto/metadataUser/internal/repository"
+	model "proyecto/metadataUser/pkg"
 )
 
 //El puntero al controlador 
@@ -21,17 +23,25 @@ func New(ctrl *metadataUser.Controller) *Handler {
 }
 
 // Es el handler 
-func (h * Handler) GetMetadatUser(w http.ResponseWriter, req *http.Request) {
+func (h * Handler) CreateMetadatUser(w http.ResponseWriter, req *http.Request) {
 	//Obtener el Id 
-	id := req.FormValue("id")
+	user := model.MetadataUser{
+		Email:       req.FormValue("email"),
+		FullName:    req.FormValue("full_name"),
+		AvatarURL:   req.FormValue("avatar_url"),
+		PhoneNumber: req.FormValue("phone_number"),
+		BirthDate:   req.FormValue("birth_date"),
+		LastUpdated: time.Now().Format(time.RFC3339), // Fecha actual en formato ISO
+	}
 	//Verifica que no venga vacio 
-	if id == "" {
-		w.WriteHeader(http.StatusBadRequest)
+	if user.Email == "" {
+		http.Error(w, "El campo 'email' es obligatorio.", http.StatusBadRequest)
+		return
 	}
 
 	ctx := req.Context()
 	//Obtiene los datos o el error 
-	m, err := h.ctrl.Get(ctx, id)
+	m, err := h.ctrl.Put(ctx, &user)
 	if err != nil && errors.Is(err, repository.ErrNotFound) {
 		w.WriteHeader(http.StatusNotFound)
 		return
