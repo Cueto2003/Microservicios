@@ -22,6 +22,32 @@ func New(ctrl *metadataUser.Controller) *Handler {
 	return &Handler{ctrl}
 }
 
+func (h * Handler) GetMetadatUser(w http.ResponseWriter, req *http.Request) {
+    //Obtener el Id 
+    Email := req.FormValue("email")
+    //Verifica que no venga vacio 
+    if Email == "" {
+        w.WriteHeader(http.StatusBadRequest)
+		return
+    }
+
+    ctx := req.Context()
+    //Obtiene los datos o el error 
+    m, err := h.ctrl.Get(ctx, Email)
+    if err != nil && errors.Is(err, repository.ErrNotFound) {
+        w.WriteHeader(http.StatusNotFound)
+        return
+    } else if err != nil {
+        log.Printf("Repository error: %v\n", err)
+        w.WriteHeader(http.StatusInternalServerError)
+        return
+    }
+    // codifica y manda la espuesta 
+    if err := json.NewEncoder(w).Encode(m); err != nil {
+        log.Printf("Response error: v%\n", err)
+    }
+}
+
 // Es el handler 
 func (h * Handler) CreateMetadatUser(w http.ResponseWriter, req *http.Request) {
 	//Obtener el Id 
