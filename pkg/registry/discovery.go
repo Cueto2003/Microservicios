@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+
+
 type Registry interface {
 	Register(ctx context.Context, instanceID string, serviceName string, hostPort string) error
 	Deregister(ctx context.Context, instanceID string, serviceName string) error

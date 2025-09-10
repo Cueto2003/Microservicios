@@ -1,0 +1,44 @@
+services:
+  consul:
+    image: consul:1.15
+    container_name: consul
+    ports:
+      - "8500:8500"       # UI/API HTTP
+      - "8600:8600/udp"   # DNS
+    command: "consul agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0 -data-dir=/consul/data"
+    volumes:
+      - ./consul-data:/consul/data   # persistencia local
+    networks:
+      - microservice-net
+
+  auth-server:
+    build:
+      context: .
+      dockerfile: auth-server/authserver.dockerfile
+    container_name: auth-server
+    ports:
+      - "8082:8082"
+    environment:
+      - CONSUL_HOST=consul:8500
+    depends_on:
+      - consul
+    networks:
+      - microservice-net
+
+  metadata-user:
+    build:
+      context: .
+      dockerfile: metadataUser/metadataUser.dockerfile
+    container_name: metadata-user
+    ports:
+      - "8081:8081"
+    environment:
+      - CONSUL_HOST=consul:8500
+    depends_on:
+      - consul
+    networks:
+      - microservice-net
+
+networks:
+  microservice-net:
+    driver: bridge

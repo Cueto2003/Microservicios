@@ -1,0 +1,1 @@
+{"Token":"","Service":{"ID":"metadata-user-5091496020571891859","Service":"metadata-user","Tags":null,"Address":"localhost","Meta":null,"Port":8081,"Weights":{"Passing":1,"Warning":1},"EnableTagOverride":false,"Proxy":{"Mode":"","MeshGateway":{},"Expose":{}},"Connect":{},"PeerName":"","CreateIndex":0,"ModifyIndex":0},"Source":"remote"}
