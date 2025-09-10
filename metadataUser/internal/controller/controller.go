@@ -28,11 +28,9 @@ func New(repo metadataUserRepository) *Controller {
 
 func (c *Controller) Get(ctx context.Context, id string) (*model.MetadataUser, error) {
 	res, err := c.repo.Get(ctx, id)
-
 	if err != nil {
 		return nil, ErrNotFound
 	}
-
 	return res, err
 }
 
