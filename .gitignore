@@ -1,1 +1,5 @@
-auth-server/.env
+# Ignorar archivos de entorno
+.env
+
+# Ignorar datos de Consul
+consul-data/
