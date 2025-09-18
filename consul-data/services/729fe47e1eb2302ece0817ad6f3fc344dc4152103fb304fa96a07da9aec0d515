@@ -1,0 +1,1 @@
+{"Token":"","Service":{"ID":"auth-server-1267774387329210972","Service":"auth-server","Tags":null,"Address":"localhost","Meta":null,"Port":8082,"Weights":{"Passing":1,"Warning":1},"EnableTagOverride":false,"Proxy":{"Mode":"","MeshGateway":{},"Expose":{}},"Connect":{},"PeerName":"","CreateIndex":0,"ModifyIndex":0},"Source":"remote"}

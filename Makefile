@@ -14,4 +14,7 @@ test-metadataUser:
 	curl -X GET "http://localhost:8081/MetadataUser/Get?email=oscar@example.com"
 
 run-consul-dev-server:
-	docker run -d -p 8500:8500 -p 8600:8600/udp --name=dev-consul consul:1.15.4 agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
+	docker run -d --name consul \
+		--network microservice-net \
+		-p 8500:8500 -p 8600:8600/udp \
+		consul:1.15.4 agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0
